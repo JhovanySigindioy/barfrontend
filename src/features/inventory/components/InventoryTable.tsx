@@ -3,21 +3,16 @@ import { motion } from 'framer-motion';
 import { Icon } from '../../../components/Icon';
 import { cn } from '../../../utils/cn';
 
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    category: string;
-    stock: number;
-    image?: string;
-}
+import { type Product } from '../hooks/useProducts';
 
 interface InventoryTableProps {
     products: Product[];
     isLoading?: boolean;
+    onEdit: (product: Product) => void;
+    onDelete: (id: string | number) => void;
 }
 
-export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoading }) => {
+export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoading, onEdit, onDelete }) => {
     if (isLoading) {
         return (
             <div className="glass rounded-3xl border border-primary/10 overflow-hidden animate-pulse">
@@ -37,7 +32,9 @@ export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoad
                         <tr className="bg-primary/5 border-b border-primary/10">
                             <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Producto</th>
                             <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Categoría</th>
-                            <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Precio</th>
+                            <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Costo</th>
+                            <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Venta</th>
+                            <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Margen</th>
                             <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Stock</th>
                             <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em]">Estado</th>
                             <th className="px-6 py-5 text-[10px] font-black text-primary uppercase tracking-[0.2em] text-right">Acciones</th>
@@ -67,7 +64,7 @@ export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoad
                                             </div>
                                             <div>
                                                 <p className="font-black text-sm text-white uppercase tracking-tight">{product.name}</p>
-                                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">ID: {product.id.split('-')[0]}</p>
+                                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">ID: {String(product.id).split('-')[0]}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -77,9 +74,27 @@ export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoad
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
+                                        <p className="font-bold text-xs text-slate-400">
+                                            ${(product.cost_price || 0).toLocaleString()}
+                                        </p>
+                                    </td>
+                                    <td className="px-6 py-4">
                                         <p className="font-black text-sm text-primary-400">
                                             ${product.price.toLocaleString()}
                                         </p>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {(() => {
+                                            const margin = product.price - (product.cost_price || 0);
+                                            const percent = product.price > 0 ? (margin / product.price) * 100 : 0;
+                                            return (
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs font-black text-success tracking-tighter cursor-help" title={`Diferencia: $${margin.toLocaleString()}`}>
+                                                        {percent.toFixed(0)}%
+                                                    </span>
+                                                </div>
+                                            );
+                                        })()}
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-2">
@@ -111,12 +126,18 @@ export const InventoryTable: React.FC<InventoryTableProps> = ({ products, isLoad
                                         )}
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors">
-                                                <Icon name="edit" className="text-sm" />
+                                        <div className="flex items-center justify-end gap-2 transition-opacity">
+                                            <button
+                                                onClick={() => onEdit(product)}
+                                                className="p-2.5 bg-white/5 hover:bg-primary/20 rounded-xl text-slate-400 hover:text-primary transition-all border border-white/5 hover:border-primary/20"
+                                            >
+                                                <Icon name="edit" size={14} />
                                             </button>
-                                            <button className="p-2 hover:bg-red-500/10 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
-                                                <Icon name="delete" className="text-sm" />
+                                            <button
+                                                onClick={() => onDelete(product.id)}
+                                                className="p-2.5 bg-white/5 hover:bg-red-500/20 rounded-xl text-slate-400 hover:text-red-500 transition-all border border-white/5 hover:border-red-500/20"
+                                            >
+                                                <Icon name="delete" size={14} />
                                             </button>
                                         </div>
                                     </td>

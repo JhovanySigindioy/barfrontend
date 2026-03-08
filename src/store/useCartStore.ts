@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 export interface OrderItem {
     id: string;
-    productId: string;
+    productId: string | number;
     name: string;
     price: number;
     quantity: number;
@@ -19,8 +19,8 @@ export interface TableOrder {
 
 interface CartState {
     orders: Record<number, TableOrder>; // Key is tableId
-    addToTable: (tableId: number, product: { id: string; name: string; price: number }) => void;
-    removeFromTable: (tableId: number, productId: string) => void;
+    addToTable: (tableId: number, product: { id: string | number; name: string; price: number }) => void;
+    removeFromTable: (tableId: number, productId: string | number) => void;
     clearTable: (tableId: number) => void;
     getTableTotal: (tableId: number) => number;
 }

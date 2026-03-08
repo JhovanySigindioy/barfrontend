@@ -2,17 +2,11 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../../../components/Icon';
 
-interface OrderItem {
-    id: string;
-    productId: string;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { type OrderItem } from '../../../store/useCartStore';
 
 interface ConsumptionTableProps {
     items: OrderItem[];
-    onRemove: (productId: string) => void;
+    onRemove: (productId: string | number) => void;
 }
 
 export const ConsumptionTable: React.FC<ConsumptionTableProps> = ({ items, onRemove }) => {

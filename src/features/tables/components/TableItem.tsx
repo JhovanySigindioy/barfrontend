@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../../components/Icon';
-import { type BarTable, type TableStatus } from './TableGrid';
+import { type BarTable, type TableStatus } from '../types';
 
 interface TableItemProps {
     table: BarTable;

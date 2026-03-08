@@ -8,8 +8,8 @@ interface MainLayoutProps {
     children?: React.ReactNode;
     hideHeader?: boolean;
     hideSidebar?: boolean;
-    activeTab?: 'tables' | 'inventory' | 'sales' | 'auth';
-    onTabChange?: (tab: 'tables' | 'inventory' | 'sales' | 'auth') => void;
+    activeTab?: 'tables' | 'inventory' | 'sales' | 'expenses' | 'auth';
+    onTabChange?: (tab: 'tables' | 'inventory' | 'sales' | 'expenses' | 'auth') => void;
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
@@ -76,6 +76,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                         >
                             <Icon name="bar_chart" fill={activeTab === 'sales'} />
                             <span>Ventas</span>
+                        </button>
+
+                        <button
+                            onClick={() => onTabChange?.('expenses')}
+                            className={cn(
+                                "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all",
+                                activeTab === 'expenses' ? "bg-primary text-background-dark shadow-xl shadow-primary/20" : "text-slate-500 hover:bg-primary/5"
+                            )}
+                        >
+                            <Icon name="payments" fill={activeTab === 'expenses'} />
+                            <span>Gastos</span>
                         </button>
 
                         <button

@@ -3,14 +3,7 @@ import { motion } from 'framer-motion';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../../components/Icon';
 
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    category: string;
-    stock: number;
-    image?: string;
-}
+import { type Product } from '../hooks/useProducts';
 
 interface ProductCardProps {
     product: Product;
