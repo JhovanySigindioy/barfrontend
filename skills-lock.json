@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "react-vite-best-practices": {
+      "source": "asyrafhussin/agent-skills",
+      "sourceType": "github",
+      "computedHash": "f39617add5f4853e837aa7f09dfbe8dc6527b6debfa91d4ca89de5ed0ecd614a"
+    },
+    "shadcn-ui": {
+      "source": "jezweb/claude-skills",
+      "sourceType": "github",
+      "computedHash": "cd631c67f61e7bc001576d4b3063bacef6602f0555e5dae414b9893a0a540de9"
+    }
+  }
+}

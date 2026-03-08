@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ffbf00;
+  --color-primary-50: #fff9e6;
+  --color-primary-100: #fff0b3;
+  --color-primary-200: #ffe680;
+  --color-primary-300: #ffdb4d;
+  --color-primary-400: #ffd11a;
+  --color-primary-500: #ffbf00;
+  --color-primary-600: #cca300;
+  --color-primary-700: #997a00;
+  --color-primary-800: #665200;
+  --color-primary-900: #332900;
+
+  --color-background-light: #f8f8f5;
+  --color-background-dark: #12110a;
+
+  --color-success: #10b981;
+}
+
+/* Enable class-based dark mode in Tailwind 4 */
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+@layer base {
+  body {
+    @apply bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50 transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-primary/5 backdrop-blur-md border border-primary/10 transition-all duration-300;
+  }
+
+  .glass-hover {
+    @apply hover:bg-primary/10 hover:border-primary/30;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 191, 0, 0.15);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 191, 0, 0.3);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animations */
+@keyframes pulse-gold {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 191, 0, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 191, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 191, 0, 0);
+  }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s infinite;
+}
