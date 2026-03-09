@@ -7,7 +7,8 @@ import { cn } from '../../../utils/cn';
 const CATEGORIES = ['Servicios', 'Arriendo', 'Suministros', 'Aseo', 'Mantenimiento', 'Personal', 'Otros'];
 
 export const ExpensesManagement = () => {
-    const { data: expenses, isLoading } = useExpenses();
+    const [currentMonth, setCurrentMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
+    const { data: expenses, isLoading } = useExpenses(currentMonth);
     const addExpense = useAddExpense();
     const deleteExpense = useDeleteExpense();
 
@@ -31,7 +32,7 @@ export const ExpensesManagement = () => {
         setFormData({ description: '', amount: '', category: 'Servicios', date: new Date().toISOString().split('T')[0] });
     };
 
-    if (isLoading) return <div className="p-10 animate-pulse bg-white/5 rounded-[3rem] h-[500px]" />;
+    if (isLoading) return <div className="p-10 animate-pulse bg-slate-100 dark:bg-white/5 rounded-[3rem] h-[500px] border border-slate-200 dark:border-white/5" />;
 
     const totalMonthly = expenses?.reduce((acc, curr) => acc + Number(curr.amount), 0) || 0;
 
@@ -39,15 +40,27 @@ export const ExpensesManagement = () => {
         <div className="space-y-8 pb-20">
             {/* Header / Summary */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div>
-                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Gastos Operativos</h3>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Gestión de costos fijos y variables del negocio</p>
+                <div className="flex items-center gap-6">
+                    <div>
+                        <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Gastos Operativos</h3>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Gestión de costos fijos y variables del negocio</p>
+                    </div>
+
+                    {/* Month Selector */}
+                    <div className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 p-1 rounded-2xl flex items-center gap-1">
+                        <input
+                            type="month"
+                            value={currentMonth}
+                            onChange={(e) => setCurrentMonth(e.target.value)}
+                            className="bg-transparent text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest outline-none px-3 cursor-pointer"
+                        />
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-6">
                     <div className="text-right">
-                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1">Gasto Total</span>
-                        <p className="text-3xl font-black text-white tracking-tighter">${totalMonthly.toLocaleString()}</p>
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1">Gasto en {currentMonth}</span>
+                        <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">${totalMonthly.toLocaleString()}</p>
                     </div>
                     <button
                         onClick={() => setIsAdding(true)}
@@ -68,14 +81,14 @@ export const ExpensesManagement = () => {
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="bg-white/[0.02] border border-white/5 p-6 rounded-[2rem] flex items-center justify-between group hover:bg-white/[0.04] transition-all"
+                            className="bg-white dark:bg-white/[0.02] border border-black/5 dark:border-white/5 p-6 rounded-[2rem] flex items-center justify-between group hover:bg-black/[0.01] dark:hover:bg-white/[0.04] transition-all shadow-sm dark:shadow-none"
                         >
                             <div className="flex items-center gap-5">
-                                <div className="size-12 bg-white/5 rounded-2xl flex items-center justify-center text-slate-400">
+                                <div className="size-12 bg-black/[0.03] dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-500 dark:text-slate-400">
                                     <Icon name={getCategoryIcon(expense.category)} size={20} />
                                 </div>
                                 <div>
-                                    <p className="text-xs font-black text-white uppercase tracking-tight">{expense.description}</p>
+                                    <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{expense.description}</p>
                                     <div className="flex items-center gap-3 mt-1">
                                         <span className="text-[9px] font-bold text-primary uppercase bg-primary/10 px-2 py-0.5 rounded-md">{expense.category}</span>
                                         <span className="text-[9px] font-bold text-slate-500 uppercase">{new Date(expense.date).toLocaleDateString()}</span>
@@ -83,7 +96,7 @@ export const ExpensesManagement = () => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-6">
-                                <span className="text-sm font-black text-white">${Number(expense.amount).toLocaleString()}</span>
+                                <span className="text-sm font-black text-slate-900 dark:text-white">${Number(expense.amount).toLocaleString()}</span>
                                 <button
                                     onClick={() => deleteExpense.mutate(expense.id)}
                                     className="size-10 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white"
@@ -94,17 +107,17 @@ export const ExpensesManagement = () => {
                         </motion.div>
                     ))}
                     {expenses?.length === 0 && (
-                        <div className="h-60 flex flex-col items-center justify-center opacity-20 border-2 border-dashed border-white/5 rounded-[3rem] text-center">
-                            <Icon name="receipt_long" size={48} className="mb-4" />
-                            <p className="text-xs font-black uppercase tracking-widest">No hay gastos registrados</p>
+                        <div className="h-60 flex flex-col items-center justify-center opacity-20 border-2 border-dashed border-black/10 dark:border-white/5 rounded-[3rem] text-center">
+                            <Icon name="receipt_long" size={48} className="mb-4 text-slate-900 dark:text-white" />
+                            <p className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white">No hay gastos registrados</p>
                         </div>
                     )}
                 </div>
 
                 {/* Sidebar Stats or Recent */}
                 <div className="space-y-6">
-                    <div className="bg-white/[0.03] border border-white/5 p-8 rounded-[2.5rem] space-y-6">
-                        <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5 pb-4">Distribución por Categoría</h4>
+                    <div className="bg-white dark:bg-white/[0.03] border border-slate-100 dark:border-white/5 p-8 rounded-[2.5rem] shadow-sm dark:shadow-none space-y-6">
+                        <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-white/5 pb-4">Categoría</h4>
                         <div className="space-y-4">
                             {CATEGORIES.map(cat => {
                                 const total = expenses?.filter(e => e.category === cat).reduce((a, b) => a + Number(b.amount), 0) || 0;
@@ -112,10 +125,10 @@ export const ExpensesManagement = () => {
                                 return (
                                     <div key={cat} className="space-y-2">
                                         <div className="flex justify-between text-[10px] font-bold uppercase tracking-tight">
-                                            <span className="text-slate-400">{cat}</span>
-                                            <span className="text-white">${total.toLocaleString()}</span>
+                                            <span className="text-slate-500 dark:text-slate-400">{cat}</span>
+                                            <span className="text-slate-900 dark:text-white">${total.toLocaleString()}</span>
                                         </div>
-                                        <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                                        <div className="h-1 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                                             <div
                                                 className="h-full bg-primary"
                                                 style={{ width: `${(total / totalMonthly) * 100}%` }}
@@ -138,17 +151,17 @@ export const ExpensesManagement = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsAdding(false)}
-                            className="absolute inset-0 bg-black/95 backdrop-blur-md"
+                            className="absolute inset-0 bg-slate-900/60 dark:bg-black/95 backdrop-blur-sm"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden"
+                            className="w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden"
                         >
-                            <div className="p-8 border-b border-white/5 flex items-center justify-between">
-                                <h2 className="text-sm font-black text-white uppercase tracking-widest">Nuevo Gasto</h2>
-                                <button onClick={() => setIsAdding(false)} className="text-slate-500 hover:text-white transition-colors">
+                            <div className="p-8 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-black/20 flex items-center justify-between">
+                                <h2 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest">Nuevo Gasto</h2>
+                                <button onClick={() => setIsAdding(false)} className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                     <Icon name="close" />
                                 </button>
                             </div>
@@ -160,7 +173,7 @@ export const ExpensesManagement = () => {
                                         required
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
+                                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-4 px-5 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-300 dark:placeholder:text-slate-800"
                                         placeholder="Ej. Pago de Internet Marzo"
                                     />
                                 </div>
@@ -174,7 +187,7 @@ export const ExpensesManagement = () => {
                                                 required
                                                 value={formData.amount}
                                                 onChange={e => setFormData({ ...formData, amount: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-10 pr-5 text-white outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
+                                                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-4 pl-10 pr-5 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-300 dark:placeholder:text-slate-800"
                                                 placeholder="0.00"
                                             />
                                         </div>
@@ -186,7 +199,7 @@ export const ExpensesManagement = () => {
                                             required
                                             value={formData.date}
                                             onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
+                                            className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-4 px-5 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium"
                                         />
                                     </div>
                                 </div>
@@ -200,7 +213,7 @@ export const ExpensesManagement = () => {
                                                 onClick={() => setFormData({ ...formData, category: cat })}
                                                 className={cn(
                                                     "px-4 py-2 rounded-xl font-black text-[9px] uppercase tracking-widest border transition-all",
-                                                    formData.category === cat ? "bg-primary text-background-dark border-primary" : "bg-white/5 border-white/5 text-slate-500"
+                                                    formData.category === cat ? "bg-primary text-background-dark border-primary" : "bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-slate-300"
                                                 )}
                                             >
                                                 {cat}

@@ -57,47 +57,47 @@ export const AddTableModal: React.FC<AddTableModalProps> = ({ isOpen, onClose, o
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+                        className="absolute inset-0 bg-slate-900/60 dark:bg-black/95 backdrop-blur-sm"
                     />
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="w-full max-w-sm bg-[#12110a] border border-white/5 rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden"
+                        className="w-full max-w-sm bg-white dark:bg-[#12110a] border border-slate-200 dark:border-white/5 rounded-3xl shadow-2xl relative z-10 overflow-hidden max-h-[90vh] flex flex-col"
                     >
-                        <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                        <div className="p-6 border-b border-slate-100 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-black/20">
                             <div className="flex items-center gap-3">
-                                <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                                    <Icon name="event_seat" size={20} />
+                                <div className="size-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                                    <Icon name="event_seat" size={16} />
                                 </div>
                                 <div>
-                                    <h2 className="text-sm font-black text-white uppercase tracking-widest leading-none">Nueva Mesa</h2>
-                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1 opacity-60">Configurar ubicación</p>
+                                    <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest leading-none">Nueva Mesa</h2>
+                                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1 opacity-60">Configurar ubicación</p>
                                 </div>
                             </div>
-                            <button onClick={onClose} className="size-10 bg-white/5 rounded-xl flex items-center justify-center text-slate-500 hover:text-white transition-colors">
-                                <Icon name="close" />
+                            <button onClick={onClose} className="size-8 bg-slate-100 dark:bg-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors border border-slate-200 dark:border-transparent">
+                                <Icon name="close" size={14} />
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                        <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1">
                             <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Número de Mesa</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-1">Número de Mesa</label>
                                     <input
                                         type="text"
                                         required
                                         maxLength={10}
                                         value={formData.number}
                                         onChange={e => setFormData({ ...formData, number: e.target.value })}
-                                        className="w-full bg-white/[0.05] border border-white/5 rounded-2xl py-4 px-5 text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-800"
+                                        className="w-full bg-slate-50 dark:bg-white/[0.05] border border-slate-200 dark:border-white/5 rounded-xl py-2.5 px-4 text-xs text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-300 dark:placeholder:text-slate-800"
                                         placeholder="Ej. T-01"
                                     />
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Capacidad (Pax)</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-1">Capacidad (Pax)</label>
                                     <div className="grid grid-cols-4 gap-2">
                                         {['2', '4', '6', '8'].map(cap => (
                                             <button
@@ -105,10 +105,10 @@ export const AddTableModal: React.FC<AddTableModalProps> = ({ isOpen, onClose, o
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, capacity: cap })}
                                                 className={cn(
-                                                    "py-3 rounded-xl font-black text-[9px] uppercase tracking-widest border transition-all",
+                                                    "py-2 rounded-lg font-black text-[8px] uppercase tracking-widest border transition-all",
                                                     formData.capacity === cap
-                                                        ? "bg-primary text-background-dark border-primary shadow-lg shadow-primary/10"
-                                                        : "bg-white/5 border-white/5 text-slate-500 hover:bg-white/10"
+                                                        ? "bg-primary text-background-dark border-primary shadow-md shadow-primary/10"
+                                                        : "bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/5 text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900"
                                                 )}
                                             >
                                                 {cap}p
@@ -119,16 +119,16 @@ export const AddTableModal: React.FC<AddTableModalProps> = ({ isOpen, onClose, o
                             </div>
 
                             {error && (
-                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3">
-                                    <Icon name="error" className="text-red-500" />
-                                    <p className="text-[10px] font-black text-red-500 uppercase tracking-widest">{error}</p>
+                                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3">
+                                    <Icon name="error" className="text-red-500" size={14} />
+                                    <p className="text-[9px] font-black text-red-500 uppercase tracking-widest">{error}</p>
                                 </div>
                             )}
 
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full py-5 bg-primary text-background-dark rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                                className="w-full py-3.5 bg-primary text-background-dark rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all disabled:opacity-50"
                             >
                                 {isLoading ? 'Creando...' : 'Crear Mesa'}
                             </button>

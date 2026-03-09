@@ -24,18 +24,6 @@ export interface ReportData {
         revenue: string;
         orders: string;
     }>;
-    categoryStats?: Array<{
-        category: string;
-        revenue: string;
-    }>;
-    dailyTrend?: Array<{
-        date: string;
-        revenue: string;
-    }>;
-    hourlyStats?: Array<{
-        hour: string;
-        revenue: string;
-    }>;
 }
 
 export const useReports = (period: 'day' | 'week' | 'month' | 'total' = 'total') => {

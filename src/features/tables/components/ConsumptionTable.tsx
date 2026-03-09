@@ -24,13 +24,13 @@ export const ConsumptionTable: React.FC<ConsumptionTableProps> = ({ items, onRem
         <div className="w-full overflow-hidden">
             <table className="w-full text-left border-collapse">
                 <thead>
-                    <tr className="border-b border-primary/10">
-                        <th className="pb-3 text-[9px] font-black text-slate-500 uppercase tracking-widest pl-2">Cant.</th>
-                        <th className="pb-3 text-[9px] font-black text-slate-500 uppercase tracking-widest">Producto</th>
-                        <th className="pb-3 text-[9px] font-black text-slate-500 uppercase tracking-widest text-right pr-2">Total</th>
+                    <tr className="border-b border-slate-200 dark:border-primary/10">
+                        <th className="pb-3 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-2">Cant.</th>
+                        <th className="pb-3 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Producto</th>
+                        <th className="pb-3 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest text-right pr-2">Total</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                     <AnimatePresence initial={false}>
                         {items.map((item) => (
                             <motion.tr
@@ -39,7 +39,7 @@ export const ConsumptionTable: React.FC<ConsumptionTableProps> = ({ items, onRem
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 key={item.id}
-                                className="group hover:bg-white/5 transition-colors"
+                                className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
                             >
                                 <td className="py-3 pl-2">
                                     <div className="flex items-center justify-center h-7 w-7 bg-primary/10 rounded-lg text-primary font-black text-xs">
@@ -47,19 +47,19 @@ export const ConsumptionTable: React.FC<ConsumptionTableProps> = ({ items, onRem
                                     </div>
                                 </td>
                                 <td className="py-3">
-                                    <p className="font-black text-xs text-slate-100 leading-tight">{item.name}</p>
-                                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter mt-0.5">
+                                    <p className="font-black text-xs text-slate-900 dark:text-slate-100 leading-tight">{item.name}</p>
+                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter mt-0.5">
                                         ${item.price.toLocaleString()} c/u
                                     </p>
                                 </td>
                                 <td className="py-3 text-right pr-2">
                                     <div className="flex items-center justify-end gap-3">
-                                        <p className="font-black text-xs text-white">
+                                        <p className="font-black text-xs text-slate-900 dark:text-white">
                                             ${(item.price * item.quantity).toLocaleString()}
                                         </p>
                                         <button
                                             onClick={() => onRemove(item.productId)}
-                                            className="p-1.5 text-slate-600 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-colors opacity-0 group-hover:opacity-100"
+                                            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-colors opacity-0 group-hover:opacity-100"
                                         >
                                             <Icon name="close" size={14} />
                                         </button>

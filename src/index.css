@@ -1,20 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #ffbf00;
+  --color-primary: #f2b90d;
   --color-primary-50: #fff9e6;
   --color-primary-100: #fff0b3;
   --color-primary-200: #ffe680;
   --color-primary-300: #ffdb4d;
   --color-primary-400: #ffd11a;
-  --color-primary-500: #ffbf00;
+  --color-primary-500: #f2b90d;
   --color-primary-600: #cca300;
   --color-primary-700: #997a00;
   --color-primary-800: #665200;
   --color-primary-900: #332900;
 
+  /* Light Mode Palette - Exact Google Stitch 3 Match */
   --color-background-light: #f8f8f5;
+  --color-surface-light: #ffffff;
+  --color-border-light: #e2e8f0;
+  /* slate-200 */
+  --color-text-main-light: #0f172a;
+  /* slate-900 */
+  --color-text-muted-light: #64748b;
+  /* slate-500 */
+
+  /* Dark Mode Palette */
   --color-background-dark: #12110a;
+  --color-surface-dark: rgba(255, 255, 255, 0.03);
 
   --color-success: #10b981;
 }
@@ -49,11 +60,11 @@ body {
 
 @layer components {
   .glass {
-    @apply bg-primary/5 backdrop-blur-md border border-primary/10 transition-all duration-300;
+    @apply bg-white/60 dark:bg-primary/5 backdrop-blur-md border border-black/[0.03] dark:border-primary/10 transition-all duration-300;
   }
 
   .glass-hover {
-    @apply hover:bg-primary/10 hover:border-primary/30;
+    @apply hover:bg-white/80 dark:hover:bg-primary/10 hover:border-black/10 dark:hover:border-primary/30;
   }
 }
 
@@ -68,14 +79,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 191, 0, 0.15);
+  @apply bg-primary/20 dark:bg-primary/15;
   border-radius: 99px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 191, 0, 0.3);
+  @apply bg-primary/40 dark:bg-primary/30;
   border: 2px solid transparent;
   background-clip: content-box;
 }

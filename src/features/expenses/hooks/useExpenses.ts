@@ -9,11 +9,14 @@ export interface Expense {
     date: string;
 }
 
-export const useExpenses = () => {
+export const useExpenses = (month?: string) => {
     return useQuery({
-        queryKey: ['expenses'],
+        queryKey: ['expenses', month],
         queryFn: async () => {
-            const response = await fetch(`${API_BASE_URL}/expenses`);
+            const url = new URL(`${API_BASE_URL}/expenses`);
+            if (month) url.searchParams.append('month', month);
+
+            const response = await fetch(url.toString());
             if (!response.ok) throw new Error('Error al cargar gastos');
             return response.json() as Promise<Expense[]>;
         }

@@ -39,10 +39,10 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen w-full bg-[#05070a] flex items-center justify-center p-6 overflow-hidden relative">
+        <div className="min-h-screen w-full bg-slate-50 dark:bg-[#05070a] flex items-center justify-center p-6 overflow-hidden relative transition-colors duration-500">
             {/* Background Orbs */}
-            <div className="absolute top-0 -left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-pulse" />
-            <div className="absolute bottom-0 -right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] mix-blend-screen" />
+            <div className="absolute top-0 -left-1/4 w-[600px] h-[600px] bg-primary/10 dark:bg-primary/20 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" />
+            <div className="absolute bottom-0 -right-1/4 w-[600px] h-[600px] bg-slate-200 dark:bg-purple-600/10 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -50,17 +50,17 @@ export const Login = () => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full max-w-md relative z-10"
             >
-                <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-10 shadow-2xl overflow-hidden relative">
+                <div className="bg-white dark:bg-white/[0.03] backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 shadow-2xl dark:shadow-none overflow-hidden relative">
                     {/* Internal Glow */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-[60px] -mr-16 -mt-16" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 dark:bg-primary/20 blur-[60px] -mr-16 -mt-16" />
 
                     <div className="text-center space-y-4 mb-10 relative">
-                        <div className="w-20 h-20 bg-primary/10 rounded-[1.75rem] flex items-center justify-center mx-auto border border-primary/20 rotate-12 group hover:rotate-0 transition-transform duration-500">
+                        <div className="w-20 h-20 bg-slate-100 dark:bg-primary/10 rounded-[1.75rem] flex items-center justify-center mx-auto border border-slate-200 dark:border-primary/20 rotate-12 group hover:rotate-0 transition-transform duration-500 shadow-sm">
                             <Icon name="liquor" size={32} className="text-primary" />
                         </div>
                         <div className="space-y-1">
-                            <h1 className="text-3xl font-black text-white tracking-tight uppercase">ELITE <span className="text-primary">BAR</span></h1>
-                            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Sistema de Control Profesional</p>
+                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase"><span className="text-primary">BAR</span></h1>
+                            <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Sistema de Control Profesional</p>
                         </div>
                     </div>
 
@@ -68,13 +68,13 @@ export const Login = () => {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Usuario</label>
                             <div className="relative group">
-                                <Icon name="person" size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-primary transition-colors" />
+                                <Icon name="person" size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-600 group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="text"
                                     required
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full bg-white/[0.05] border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-800"
+                                    className="w-full bg-slate-50 dark:bg-white/[0.05] border border-slate-200 dark:border-white/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-300 dark:placeholder:text-slate-800"
                                     placeholder="admin"
                                 />
                             </div>
@@ -83,13 +83,13 @@ export const Login = () => {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Contraseña</label>
                             <div className="relative group">
-                                <Icon name="lock" size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-primary transition-colors" />
+                                <Icon name="lock" size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-600 group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="password"
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/[0.05] border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-800"
+                                    className="w-full bg-slate-50 dark:bg-white/[0.05] border border-slate-200 dark:border-white/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-medium placeholder:text-slate-300 dark:placeholder:text-slate-800"
                                     placeholder="••••••••"
                                 />
                             </div>
@@ -126,8 +126,8 @@ export const Login = () => {
                         </button>
                     </form>
 
-                    <div className="mt-10 pt-10 border-t border-white/5 text-center">
-                        <p className="text-slate-700 text-[9px] font-bold uppercase tracking-widest">v1.2.0 • Premium Edition</p>
+                    <div className="mt-10 pt-10 border-t border-slate-100 dark:border-white/5 text-center">
+                        <p className="text-slate-400 dark:text-slate-700 text-[9px] font-bold uppercase tracking-widest">v1.2.0 • Premium Edition</p>
                     </div>
                 </div>
             </motion.div>
