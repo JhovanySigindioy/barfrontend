@@ -590,15 +590,62 @@ function App() {
 
         <AnimatePresence mode="wait">
           {activeTab === 'tables' ? (
-            <motion.section key="t" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              {tableViewMode === 'grid' ? (
-                <TableGrid tables={tablesWithConsumption} onTableClick={handleTableClick} />
+            <motion.section key="t" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-6">
+              {/* Tab Header with Actions */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Gestión de Mesas</h3>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
+                    Vista General de la Sala • {tables.length} Mesas registradas
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsAddTableOpen(true)}
+                    className="h-10 px-6 bg-primary text-background-dark rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+                  >
+                    <Icon name="add" size={18} />
+                    Nueva Mesa
+                  </button>
+                </div>
+              </div>
+
+              {tables.length > 0 ? (
+                <>
+                  {tableViewMode === 'grid' ? (
+                    <TableGrid tables={tablesWithConsumption} onTableClick={handleTableClick} />
+                  ) : (
+                    <TableFloorPlan tables={tablesWithConsumption} onTableClick={handleTableClick} />
+                  )}
+                </>
               ) : (
-                <TableFloorPlan tables={tablesWithConsumption} onTableClick={handleTableClick} />
+                <div className="h-96 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-white/5 rounded-[3rem] opacity-30">
+                  <Icon name="grid_view" size={64} className="mb-4" />
+                  <p className="font-black uppercase tracking-[0.4em]">No hay mesas configuradas</p>
+                </div>
               )}
             </motion.section>
           ) : activeTab === 'inventory' ? (
-            <motion.section key="i" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
+            <motion.section key="i" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-6">
+              {/* Tab Header with Actions */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Inventario Central</h3>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
+                    Catálogo de Productos y Control de Stock
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsAddProductOpen(true)}
+                    className="h-10 px-6 bg-primary text-background-dark rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+                  >
+                    <Icon name="add" size={18} />
+                    Nuevo Producto
+                  </button>
+                </div>
+              </div>
+
               <div className="flex bg-slate-100 dark:bg-white/5 p-1 rounded-2xl w-fit border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none">
                 <button
                   onClick={() => setInventoryView('catalog')}
